@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div>
-      {queuer === null && establishment === null ? (
+      {queuer === undefined || establishment === undefined ? (
         <p>Connecting to database...</p>
       ) : (
         <div>
