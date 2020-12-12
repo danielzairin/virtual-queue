@@ -30,7 +30,7 @@ function Ticket() {
       <p>Queuer ID: {queuer.id}</p>
       <p>Status: {queuer.status}</p>
       <p>Queueing for: {queuer.queueingFor}</p>
-      {/* Render ticket if queuer's status is queueing */}
+      {/* Rennder ticket if queuer's status is queueing */}
 
       {/* Render allowed message if queuer's status is allowed */}
 
