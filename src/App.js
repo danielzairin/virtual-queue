@@ -19,6 +19,9 @@ function App() {
       ) : (
         <div>
           {/* Header */}
+          <h1 style={{ color: "red" }}>
+            REMINDER: ALWAYS PUSH AND PULL FROM GITHUB
+          </h1>
           <h1>PogQueue</h1>
 
           {/* Routes */}
