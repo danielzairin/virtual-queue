@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { QueuerContext } from "../contexts/QueuerContext";
 import { db } from "../firebase";
+import Discover from "./Discover";
 
 function Ticket() {
   const queuer = useContext(QueuerContext);
@@ -43,6 +44,7 @@ function Ticket() {
       {/* Render allowed message if queuer's status is denied */}
 
       {/* Render not in queue message if queuer's status is idle */}
+      <button >Go to</button>
     </div>
   );
 }
