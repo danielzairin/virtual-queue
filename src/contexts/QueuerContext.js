@@ -4,7 +4,7 @@ import { db } from "../firebase";
 export const QueuerContext = createContext();
 
 export function QueuerContextProvider(props) {
-  const [queuer, setQueuer] = useState();
+  const [queuer, setQueuer] = useState(null);
 
   useEffect(() => {
     async function listen() {
