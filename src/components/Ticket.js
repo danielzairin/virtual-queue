@@ -31,20 +31,34 @@ function Ticket() {
       <p>Queuer ID: {queuer.id}</p>
       <p>Status: {queuer.status}</p>
       <p>Queueing for: {queuer.queueingFor}</p>
+      
       {/* Rennder ticket if queuer's status is queueing */}
+      {queuer.status === "idle" ? (
+        <p>...........Queueing.............</p>
+      ) : 
+      queuer.status === "allowed" ? (
+        <p>You may now enter now </p>
+      ) :
+      queuer.status === "denied" ? (
+        <p>Your queue had been denied. Please enter queue again 
+        <button >Discover</button>
+        </p>
+      ) :
+      (
+      <p>You Need to Queue
+        <button >Discover</button>
+      </p>
+      )} 
+
 
       {/* Render allowed message if queuer's status is allowed */}
 
-      {queuer.status === "allowed" ? (
-        <p>You may now enter</p>
-      ) : (
-        <p>You shall not pass</p>
-      )}
-
       {/* Render allowed message if queuer's status is denied */}
-
+      
       {/* Render not in queue message if queuer's status is idle */}
-      <button >Go to</button>
+
+      
+      {/*<button >Go to</button>*/}
     </div>
   );
 }
