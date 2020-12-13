@@ -1,24 +1,32 @@
 import { useEffect, createContext, useState } from "react";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 
 export const EstablishmentContext = createContext();
 
 function EstablishmentContextProvider(props) {
-  const [establishment, setEstablishment] = useState();
+  const [establishment, setEstablishment] = useState(null);
 
   useEffect(() => {
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   if (user !== null) setEstablishment(user);
-    // });
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      // Temporary function for possible snapshot unsubscriber
+      let unsubscribe = () => {};
 
-    // TEMPORARY TEST DATA
-    const unsubscribe = db
-      .collection("establishments")
-      .doc("YxSVX0naBfW4AaPhgdF4rGfFVK03")
-      .onSnapshot((doc) => {
-        setEstablishment({ id: doc.id, ...doc.data() });
-      });
+      // Add database listener if user is signed in
+      if (user !== null) {
+        unsubscribe = db
+          .collection("establishments")
+          .doc(user.uid)
+          .onSnapshot((doc) => {
+            setEstablishment({ id: doc.id, ...doc.data() });
+          });
+      } else {
+        setEstablishment(null);
+        // Unsubscribe from database listener
+        unsubscribe();
+      }
+    });
 
+    // Unsubscribe from authentication listener
     return () => unsubscribe();
   }, []);
 

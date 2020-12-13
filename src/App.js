@@ -6,6 +6,7 @@ import Manage from "./components/Manage";
 import { QueuerContext } from "./contexts/QueuerContext";
 import { useContext } from "react";
 import { EstablishmentContext } from "./contexts/EstablishmentContext";
+import Authenticate from "./components/Authenticate";
 
 function App() {
   const queuer = useContext(QueuerContext);
@@ -13,11 +14,14 @@ function App() {
 
   return (
     <div>
-      {queuer === undefined || establishment === undefined ? (
+      {queuer === null ? (
         <p>Connecting to database...</p>
       ) : (
         <div>
           {/* Header */}
+          <h1 style={{ color: "red" }}>
+            REMINDER: ALWAYS PUSH AND PULL FROM GITHUB
+          </h1>
           <h1>PogQueue</h1>
 
           {/* Routes */}
@@ -29,7 +33,7 @@ function App() {
               <Ticket />
             </Route>
             <Route path="/manage">
-              <Manage />
+              {establishment === null ? <Authenticate /> : <Manage />}
             </Route>
             <Redirect to="/discover" />
           </Switch>
