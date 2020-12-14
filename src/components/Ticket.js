@@ -2,6 +2,8 @@ import { useEffect, useContext, useState } from "react";
 import { QueuerContext } from "../contexts/QueuerContext";
 import { db } from "../firebase";
 import Discover from "./Discover";
+import { NavLink } from "react-router-dom";
+
 
 function Ticket() {
   const queuer = useContext(QueuerContext);
@@ -41,12 +43,12 @@ function Ticket() {
       ) :
       queuer.status === "denied" ? (
         <p>Your queue had been denied. Please enter queue again 
-        <button >Discover</button>
+        <button><NavLink to="/discover">Discover</NavLink></button>
         </p>
       ) :
       (
       <p>You Need to Queue
-        <button >Discover</button>
+        <button><NavLink to="/discover">Discover</NavLink></button>
         </p>
       )} 
 
@@ -58,7 +60,7 @@ function Ticket() {
       {/* Render not in queue message if queuer's status is idle */}
 
       
-      {/*<button >Go to</button>*/}
+      {/*    */}
     </div>
   );
 }
