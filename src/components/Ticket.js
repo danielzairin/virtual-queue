@@ -47,7 +47,7 @@ function Ticket() {
       (
       <p>You Need to Queue
         <button >Discover</button>
-      </p>
+        </p>
       )} 
 
 
