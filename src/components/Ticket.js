@@ -49,7 +49,7 @@ function Ticket() {
       (
       <p>You Need to Queue
         <button><NavLink to="/discover">Discover</NavLink></button>
-        </p>
+      </p>
       )} 
 
 
