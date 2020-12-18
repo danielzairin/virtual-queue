@@ -15,7 +15,7 @@ function Discover() {
   return (
     <div>
       <h2>Discover nearby queues</h2>
-      <DiscoverCard />
+     
       {/* Render LIST of discover cards*/}
     </div>
   );
