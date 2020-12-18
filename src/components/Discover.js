@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import DiscoverCard from "./DiscoverCard";
 // import DiscoverCard from "./DiscoverCard";
 // import { db } from "../firebase";
 
@@ -14,6 +15,7 @@ function Discover() {
   return (
     <div>
       <h2>Discover nearby queues</h2>
+      <DiscoverCard />
       {/* Render LIST of discover cards*/}
     </div>
   );
