@@ -4,7 +4,6 @@ import { db } from "../firebase";
 import Discover from "./Discover";
 import { NavLink } from "react-router-dom";
 
-
 function Ticket() {
   const queuer = useContext(QueuerContext);
   const [establishment, setEstablishment] = useState(null);
@@ -33,33 +32,34 @@ function Ticket() {
       <p>Queuer ID: {queuer.id}</p>
       <p>Status: {queuer.status}</p>
       <p>Queueing for: {queuer.queueingFor}</p>
-      
-      {/* Rennder ticket if queuer's status is queueing */}
-      {queuer.status === "idle" ? (
-        <p>...........Queueing.............</p>
-      ) : 
-      queuer.status === "allowed" ? (
-        <p>You may now enter now </p>
-      ) :
-      queuer.status === "denied" ? (
-        <p>Your queue had been denied. Please enter queue again 
-        <button><NavLink to="/discover">Discover</NavLink></button>
-        </p>
-      ) :
-      (
-      <p>You Need to Queue
-        <button><NavLink to="/discover">Discover</NavLink></button>
-      </p>
-      )} 
 
+      {/* Rennder ticket if queuer's status is queueing */}
+      {queuer.status === "queueing" ? (
+        <p>...........Queueing.............</p>
+      ) : queuer.status === "allowed" ? (
+        <p>You may now enter now </p>
+      ) : queuer.status === "denied" ? (
+        <p>
+          Your queue had been denied. Please enter queue again
+          <button>
+            <NavLink to="/discover">Discover</NavLink>
+          </button>
+        </p>
+      ) : (
+        <p>
+          You Need to Queue
+          <button>
+            <NavLink to="/discover">Discover</NavLink>
+          </button>
+        </p>
+      )}
 
       {/* Render allowed message if queuer's status is allowed */}
 
       {/* Render allowed message if queuer's status is denied */}
-      
+
       {/* Render not in queue message if queuer's status is idle */}
 
-      
       {/*    */}
     </div>
   );
