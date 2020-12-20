@@ -47,7 +47,7 @@ function Ticket() {
   // 4. denied
 
   return (
-    <div>
+    <div >
       <h2>Ticket</h2>
       <p>Queuer ID: {queuer.id}</p>
       <p>Status: {queuer.status}</p>
