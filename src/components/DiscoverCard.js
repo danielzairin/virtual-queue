@@ -40,7 +40,7 @@ function DiscoverCard(props) {
     <div>
       <p>Establishment name: {props.name}</p>
       <p>Queue length: {props.queueLength}</p>
-      <button onClick={enqueue}>Enqueue</button>
+      <button onClick={enqueue} class="btn btn-secondary">Enqueue</button>
     </div>
   );
 }
