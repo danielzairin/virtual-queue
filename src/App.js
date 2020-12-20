@@ -15,7 +15,9 @@ function App() {
   return (
     <div>
       {queuer === null ? (
-        <p>Connecting to database...</p>
+        <div class="spinner-border text-secondary">
+        {/*<p>Connecting to database...</p>*/}
+        </div>
       ) : (
         <div>
           {/* Header */}
