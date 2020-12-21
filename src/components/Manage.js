@@ -6,21 +6,22 @@ import ManageCard from "./ManageCard";
 function Manage() {
   const establishment = useContext(EstablishmentContext);
 
-  function updateLocation() {
-    // 1. Get current position
-    navigator.geolocation.getCurrentPosition((position) => {
-      // 1.1 Update current position to database
-      db.collection("establishments").doc(establishment.id).update({
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude,
-      });
-    });
-  }
-
   function toggleOpen() {
-    db.collection("establishments").doc(establishment.id).update({
-      isOpen: !establishment.isOpen,
-    });
+    if (establishment.isOpen === true) {
+      db.collection("establishments").doc(establishment.id).update({
+        isOpen: false,
+      });
+    } else {
+      // 1. Get current position
+      navigator.geolocation.getCurrentPosition((position) => {
+        // 1.1 Update current position to database
+        db.collection("establishments").doc(establishment.id).update({
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude,
+          isOpen: true,
+        });
+      });
+    }
   }
 
   async function signOut() {
@@ -28,33 +29,39 @@ function Manage() {
   }
 
   return (
-    <div>
-      <h2>Manage</h2>
+    <div className="text-center">
       {/* Render establishment's data */}
-      <h3>Establishment's data</h3>
-      <p>Name: {establishment.name}</p>
-      <p>Is open: {establishment.isOpen.toString()}</p>
-      <p>Longitude: {establishment.longitude}</p>
-      <p>Latitude: {establishment.latitude}</p>
-      <p>Queue length: {establishment.queuers.length}</p>
-      <button onClick={updateLocation}>Use current location</button>
-      <button onClick={toggleOpen}>
+      <h1>{establishment.name} </h1>
+      <p>
+        {establishment.latitude}, {establishment.longitude}
+      </p>
+      <button
+        className={establishment.isOpen ? "btn btn-danger" : "btn btn-success"}
+        onClick={toggleOpen}
+      >
         {establishment.isOpen ? "Close queue" : "Open queue"}
       </button>
-      <button onClick={signOut}>Sign out</button>
+      <button className="btn btn-secondary ml-2" onClick={signOut}>
+        Sign out
+      </button>
+      <hr />
 
       {/* Render LIST of queuers */}
-      <h3>List of queuers</h3>
-      <ol>
-        {establishment.queuers.map((queuerId) => (
-          <li key={queuerId}>
-            <ManageCard
-              queuerId={queuerId}
-              establishmentId={establishment.id}
-            />
-          </li>
-        ))}
-      </ol>
+      {establishment.isOpen === true ? (
+        <div>
+          <h3>List of queuers</h3>
+          <ul className="list-group">
+            {establishment.queuers.map((queuerId) => (
+              <li className="list-group-item" key={queuerId}>
+                <ManageCard
+                  queuerId={queuerId}
+                  establishmentId={establishment.id}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </div>
   );
 }
