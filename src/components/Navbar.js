@@ -3,16 +3,21 @@ import { NavLink } from "react-router-dom";
 function Navbar() {
   return (
     <nav className="navbar navbar-expand-xl bg-secondary navbar-dark fixed-bottom">
-      {/*<h2>Navbar</h2>*/}
-      <ul className="navbar-nav d-flex justify-content-around w-100">
-        <li className="nav-item "> 
-          <NavLink className="text-decoration-none text-light" to="/discover">Discover</NavLink>
+      <ul className="navbar-nav d-flex justify-content-around w-100 flex-row">
+        <li className="nav-item">
+          <NavLink className="nav-link text-light" to="/discover">
+            Discover
+          </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink className="text-decoration-none text-light" to="/ticket">Ticket</NavLink>
+          <NavLink className="nav-link text-light" to="/ticket">
+            Ticket
+          </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink className="text-decoration-none text-light" to="/manage">Manage</NavLink>
+          <NavLink className="nav-link text-light" to="/manage">
+            Manage
+          </NavLink>
         </li>
       </ul>
     </nav>
