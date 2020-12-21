@@ -16,16 +16,10 @@ function App() {
     <div>
       {queuer === null ? (
         <div class="spinner-border text-secondary">
-        {/*<p>Connecting to database...</p>*/}
+          {/*<p>Connecting to database...</p>*/}
         </div>
       ) : (
         <div>
-          {/* Header */}
-          <h1 style={{ color: "red" }}>
-            REMINDER: ALWAYS PUSH AND PULL FROM GITHUB
-          </h1>
-          <h1>PogQueue</h1>
-
           {/* Routes */}
           <Switch>
             <Route path="/discover">
