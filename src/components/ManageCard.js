@@ -30,11 +30,15 @@ function ManageCard(props) {
       });
   }
   return (
-    <div>
+    <div className="text-left d-flex flex-row align-items-center">
       {/* Render queuer's ID */}
-      <p>{props.queuerId}</p>
-      <button onClick={allowEntry}>Allow entry</button>
-      <button onClick={denyEntry}>Deny entry</button>
+      <h4 className="m-0">{props.queuerId.slice(0, 4)}</h4>
+      <button className="btn btn-success ml-auto" onClick={allowEntry}>
+        Allow
+      </button>
+      <button className="btn btn-danger ml-2" onClick={denyEntry}>
+        Deny
+      </button>
     </div>
   );
 }

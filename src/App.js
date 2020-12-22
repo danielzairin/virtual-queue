@@ -14,18 +14,15 @@ function App() {
 
   return (
     <div>
+      <div className="bg-warning fixed-top p-2 text-center">
+        <i>Remember to push and pull from GitHub!</i>
+      </div>
       {queuer === null ? (
         <div class="spinner-border text-secondary">
-        {/*<p>Connecting to database...</p>*/}
+          {/*<p>Connecting to database...</p>*/}
         </div>
       ) : (
-        <div>
-          {/* Header */}
-          <h1 style={{ color: "red" }}>
-            REMINDER: ALWAYS PUSH AND PULL FROM GITHUB
-          </h1>
-          <h1>PogQueue</h1>
-
+        <div className="pt-5">
           {/* Routes */}
           <Switch>
             <Route path="/discover">
