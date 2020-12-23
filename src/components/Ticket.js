@@ -2,6 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { QueuerContext } from "../contexts/QueuerContext";
 import { db } from "../firebase";
 import { NavLink } from "react-router-dom";
+import firebase from "firebase";
 
 function Ticket() {
   const queuer = useContext(QueuerContext);
@@ -16,7 +17,7 @@ function Ticket() {
     db.collection("establishments")
       .doc(queuer.queueingFor)
       .update({
-        queuers: db.FieldValue.arrayRemove(queuer.id),
+        queuers: firebase.firestore.FieldValue.arrayRemove(queuer.id),
       });
   }
 

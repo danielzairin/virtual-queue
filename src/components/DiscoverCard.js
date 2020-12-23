@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { QueuerContext } from "../contexts/QueuerContext";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
+import firebase from "firebase";
 
 function DiscoverCard(props) {
   const queuer = useContext(QueuerContext);
@@ -14,7 +15,7 @@ function DiscoverCard(props) {
       db.collection("establishments")
         .doc(props.id)
         .update({
-          queuers: db.FieldValue.arrayUnion(queuer.id),
+          queuers: firebase.firestore.FieldValue.arrayUnion(queuer.id),
         });
 
       // 3. Set queuer's status to queueing

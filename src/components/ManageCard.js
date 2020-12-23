@@ -1,4 +1,5 @@
 import { db } from "../firebase";
+import firebase from "firebase";
 
 function ManageCard(props) {
   function allowEntry() {
@@ -11,7 +12,7 @@ function ManageCard(props) {
     db.collection("establishments")
       .doc(props.establishmentId)
       .update({
-        queuers: db.FieldValue.arrayRemove(props.queuerId),
+        queuers: firebase.firestore.FieldValue.arrayRemove(props.queuerId),
       });
   }
 
@@ -25,7 +26,7 @@ function ManageCard(props) {
     db.collection("establishments")
       .doc(props.establishmentId)
       .update({
-        queuers: db.FieldValue.arrayRemove(props.queuerId),
+        queuers: firebase.firestore.FieldValue.arrayRemove(props.queuerId),
       });
   }
   return (
