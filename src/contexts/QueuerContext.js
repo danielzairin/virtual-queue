@@ -22,6 +22,7 @@ export function QueuerContextProvider(props) {
           .then((docRef) => {
             // 1.2 Store new queuer's ID in local storage
             localStorage.setItem("queuerId", docRef.id);
+            queuerId = docRef.id;
           })
           .catch((error) => console.error(error));
       }
