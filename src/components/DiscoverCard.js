@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { QueuerContext } from "../contexts/QueuerContext";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
-import firebase from "firebase";
 
 function DiscoverCard(props) {
   const queuer = useContext(QueuerContext);
@@ -15,7 +14,7 @@ function DiscoverCard(props) {
       db.collection("establishments")
         .doc(props.id)
         .update({
-          queuers: firebase.firestore.FieldValue.arrayUnion(queuer.id),
+          queuers: db.FieldValue.arrayUnion(queuer.id),
         });
 
       // 3. Set queuer's status to queueing
@@ -38,9 +37,18 @@ function DiscoverCard(props) {
 
   return (
     <div>
-      <p>Establishment name: {props.name}</p>
-      <p>Queue length: {props.queueLength}</p>
-      <button onClick={enqueue} class="btn btn-secondary">Enqueue</button>
+      <h2>{props.name}</h2>
+      {props.queueLength > 0 ? (
+        <p>
+          {props.queueLength} {props.queueLength === 1 ? "person" : "people"} in
+          queue
+        </p>
+      ) : (
+        <p>Nobody in queue</p>
+      )}
+      <button onClick={enqueue} className="btn btn-secondary">
+        Enqueue
+      </button>
     </div>
   );
 }

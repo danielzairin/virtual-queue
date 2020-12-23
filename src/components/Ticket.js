@@ -2,7 +2,6 @@ import { useEffect, useContext, useState } from "react";
 import { QueuerContext } from "../contexts/QueuerContext";
 import { db } from "../firebase";
 import { NavLink } from "react-router-dom";
-import firebase from "firebase";
 
 function Ticket() {
   const queuer = useContext(QueuerContext);
@@ -17,7 +16,7 @@ function Ticket() {
     db.collection("establishments")
       .doc(queuer.queueingFor)
       .update({
-        queuers: firebase.firestore.FieldValue.arrayRemove(queuer.id),
+        queuers: db.FieldValue.arrayRemove(queuer.id),
       });
   }
 
@@ -47,7 +46,7 @@ function Ticket() {
   // 4. denied
 
   return (
-    <div >
+    <div>
       <h2>Ticket</h2>
       <p>Queuer ID: {queuer.id}</p>
       <p>Status: {queuer.status}</p>

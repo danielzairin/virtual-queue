@@ -49,7 +49,7 @@ function Manage() {
       {/* Render LIST of queuers */}
       {establishment.isOpen === true ? (
         <div>
-          <h3>List of queuers</h3>
+          <h3 className="mb-3">List of queuers</h3>
           <ul className="list-group">
             {establishment.queuers.map((queuerId) => (
               <li className="list-group-item" key={queuerId}>
