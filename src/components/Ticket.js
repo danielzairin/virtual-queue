@@ -1,8 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { QueuerContext } from "../contexts/QueuerContext";
-import { db } from "../firebase";
+import firebase, { db } from "../firebase";
 import { NavLink } from "react-router-dom";
-import firebase from "firebase";
 
 function Ticket() {
   const queuer = useContext(QueuerContext);

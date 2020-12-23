@@ -1,5 +1,4 @@
-import { db } from "../firebase";
-import firebase from "firebase";
+import firebase, { db } from "../firebase";
 
 function ManageCard(props) {
   function allowEntry() {

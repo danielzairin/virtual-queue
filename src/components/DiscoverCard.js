@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { QueuerContext } from "../contexts/QueuerContext";
 import { useHistory } from "react-router-dom";
-import { db } from "../firebase";
-import firebase from "firebase";
+import firebase, { db } from "../firebase";
 
 function DiscoverCard(props) {
   const queuer = useContext(QueuerContext);
