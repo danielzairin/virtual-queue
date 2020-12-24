@@ -49,7 +49,7 @@ function SignUp() {
         placeholder="Password..."
         required
       />
-      <button className="btn btn-secondary mb-3">Sign up</button>
+      <button className="btn btn-secondary btn-block mb-3">Sign up</button>
     </form>
   );
 }

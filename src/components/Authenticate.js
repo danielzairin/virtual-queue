@@ -8,13 +8,13 @@ function Authenticate() {
   return (
     <div>
       {signUpInstead ? <SignUp /> : <SignIn />}
-      <span
+      <p
         style={{ cursor: "pointer" }}
-        className="text-info"
+        className="text-info text-center"
         onClick={() => setSignUpInstead((prev) => !prev)}
       >
         {signUpInstead ? "I already have an account" : "Create an account"}
-      </span>
+      </p>
     </div>
   );
 }
