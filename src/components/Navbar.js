@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-xl navbar-dark fixed-bottom w3-theme-d4">
+    <nav className="navbar navbar-expand-xl navbar-dark fixed-bottom bg-primary">
       <ul className="navbar-nav d-flex justify-content-around w-100 flex-row ">
         <li className="nav-item">
           <NavLink className="nav-link" to="/discover">

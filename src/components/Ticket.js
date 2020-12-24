@@ -83,7 +83,7 @@ function Ticket() {
       )}
 
       {queuer.status !== "idle" ? (
-        <button className="w3-button w3-theme-d2 w3-round-large" onClick={abandon}>Abandon</button>
+        <button className="btn bg-primary" onClick={abandon}>Abandon</button>
       ) : null}
 
       </div>

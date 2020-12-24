@@ -25,11 +25,7 @@ function SignIn() {
         placeholder="Password..."
         required
       />
-<<<<<<< HEAD
-      <button className="w3-button w3-theme-d2 w3-round-large">Sign in</button>
-=======
       <button className="btn btn-secondary btn-block mb-3">Sign in</button>
->>>>>>> 208d9aa847888e6b7689963ac53ed6a805673347
     </form>
   );
 }
