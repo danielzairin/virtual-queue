@@ -48,6 +48,71 @@ function Ticket() {
 
   return (
     <div >
+      
+      <div  class="container p-3 my-3 border center mb-3 rounded-lg ">
+      
+      {establishment !== null ? (
+      <div>
+        <h2 className="text-center mb-3">
+          Position
+        </h2>
+        <div className="rounded-circle bg-primary mx-auto ">
+        <h3 className="text-center mb-3" > 
+          {establishment.queuers.findIndex((element) => element === queuer.id) +
+            1}
+        </h3>
+        <p className="text-center mb-3"> 
+          out of {establishment.queuers.length}
+        </p>
+        </div>
+       </div> 
+      ) : null}
+
+      <p className="text-center mb-3">🌝 {queuer.id}</p>
+      <p className="text-center mb-3">🧾 
+        {queuer.status === "idle" ? (<span> Idle</span>) : 
+          queuer.status === "denied" ? (<span> Denied</span>) :
+          queuer.status === "allowed" ? (<span> Allowed</span>) :
+          queuer.status === "queueing" ? (<span> In Queue</span>): null
+        }
+      </p>
+      <p className="text-center mb-3">📍 {establishment !== null ? establishment.name : null}</p>
+      
+
+      {/* Render ticket for queuer's status */}
+      {queuer.status === "queueing" ? (
+        <p className="text-center mb-3">Queueing</p>
+      ) : queuer.status === "allowed" ? (
+        <p className="text-center mb-3">You may now enter now </p>
+      ) : queuer.status === "denied" ? (
+        <p>
+          Your queue had been denied. Please abandon the queue.
+          <br />
+          
+        </p>
+      ) : (
+        <p>
+          You Need to Queue
+          <br />
+          <br />
+          <NavLink to="/discover">Discover</NavLink>
+        </p>
+      )}
+
+      {queuer.status !== "idle" ? (
+        <button className="btn btn-primary btn-block mb-3" onClick={abandon}>Abandon</button>
+      ) : null}
+
+      </div>
+    </div>
+  );
+
+
+
+    {/*just in case for backup*/}
+        
+
+    {/*<div >
       <h2  className="text-center mb-3">Ticket</h2>
       <div  class="container p-3 my-3 border center mb-3 rounded-lg ">
       <p>Queuer ID: {queuer.id}</p>
@@ -68,7 +133,7 @@ function Ticket() {
         </p>
       ) : null}
 
-      {/* Render ticket for queuer's status */}
+      {/* Render ticket for queuer's status *}
       {queuer.status === "queueing" ? (
         <p className="text-center mb-3">...........Queueing.............</p>
       ) : queuer.status === "allowed" ? (
@@ -78,7 +143,7 @@ function Ticket() {
           Your queue had been denied. Please abandon the queue.
           <br />
           <br />
-          {/*<NavLink to="/discover">Discover</NavLink>*/}
+          
         </p>
       ) : (
         <p>
@@ -95,7 +160,8 @@ function Ticket() {
 
       </div>
     </div>
-  );
+      
+  );  */}
 }
 
 export default Ticket;
