@@ -47,7 +47,7 @@ function Manage() {
       <hr />
 
       {/* Render LIST of queuers */}
-      {establishment.isOpen === true ? (
+      {establishment.queuers.length > 0 ? (
         <div>
           <h3 className="mb-3">List of queuers</h3>
           <ul className="list-group">
