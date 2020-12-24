@@ -11,14 +11,21 @@ function SignIn() {
 
   return (
     <form onSubmit={signIn}>
-      <input type="email" name="email" placeholder="E-mail..." required />
       <input
+        className="form-control mb-3"
+        type="email"
+        name="email"
+        placeholder="E-mail..."
+        required
+      />
+      <input
+        className="form-control mb-3"
         type="password"
         name="password"
         placeholder="Password..."
         required
       />
-      <button>Sign in</button>
+      <button className="btn btn-secondary mb-3">Sign in</button>
     </form>
   );
 }

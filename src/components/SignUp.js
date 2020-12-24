@@ -29,19 +29,27 @@ function SignUp() {
   return (
     <form onSubmit={signUp}>
       <input
+        className="form-control mb-3"
         type="text"
         name="name"
         placeholder="Establishment name..."
         required
       />
-      <input type="email" name="email" placeholder="E-mail..." required />
       <input
+        className="form-control mb-3"
+        type="email"
+        name="email"
+        placeholder="E-mail..."
+        required
+      />
+      <input
+        className="form-control mb-3"
         type="password"
         name="password"
         placeholder="Password..."
         required
       />
-      <button>Sign up</button>
+      <button className="btn btn-secondary mb-3">Sign up</button>
     </form>
   );
 }

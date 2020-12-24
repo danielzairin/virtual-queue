@@ -18,7 +18,7 @@ function App() {
         <i>Remember to push and pull from GitHub!</i>
       </div>
       {queuer === null ? (
-        <div class="spinner-border text-secondary">
+        <div className="spinner-border text-secondary">
           {/*<p>Connecting to database...</p>*/}
         </div>
       ) : (

@@ -26,12 +26,12 @@ function Discover() {
 
   return (
     <div>
-      <h2>Discover nearby queues</h2>
+      <h2 className="text-center mb-3">Queues Nearby</h2>
 
       {/* Render LIST of discover cards*/}
-      <ol>
+      <ol className="list-group">
         {establishments.map((establishment) => (
-          <li>
+          <li key={establishment.id} className="list-group-item">
             <DiscoverCard
               name={establishment.name}
               id={establishment.id}
