@@ -22,7 +22,7 @@ function App() {
           {/*<p>Connecting to database...</p>*/}
         </div>
       ) : (
-        <div className="pt-5">
+        <div className="pt-5 " >
           {/* Routes */}
           <Switch>
             <Route path="/discover">

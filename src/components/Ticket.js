@@ -46,7 +46,7 @@ function Ticket() {
   // 4. denied
 
   return (
-    <div>
+    <div >
       <h2  className="text-center mb-3">Ticket</h2>
       <div  class="container p-3 my-3 border center mb-3 rounded-lg ">
       <p>Queuer ID: {queuer.id}</p>
@@ -83,7 +83,7 @@ function Ticket() {
       )}
 
       {queuer.status !== "idle" ? (
-        <button onClick={abandon}>Abandon</button>
+        <button className="w3-button w3-theme-d2 w3-round-large" onClick={abandon}>Abandon</button>
       ) : null}
 
       </div>
