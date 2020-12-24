@@ -39,10 +39,6 @@ function Ticket() {
     return () => unsubscribe();
   }, [queuer]);
 
-  function changeStatus(){
-
-
-  }
 
   // Statuses
   // 1. idle
@@ -55,7 +51,13 @@ function Ticket() {
       <h2  className="text-center mb-3">Ticket</h2>
       <div  class="container p-3 my-3 border center mb-3 rounded-lg ">
       <p>Queuer ID: {queuer.id}</p>
-      <p>Status: {queuer.status}</p>
+      <p>Status: 
+        {queuer.status === "idle" ? (<span> Idle</span>) : 
+          queuer.status === "denied" ? (<span> Denied</span>) :
+          queuer.status === "allowed" ? (<span> Allowed</span>) :
+          queuer.status === "queueing" ? (<span> In Queue</span>): null
+        }
+      </p>
       <p>Queueing for: {establishment !== null ? establishment.name : null}</p>
       {establishment !== null ? (
         <p>
