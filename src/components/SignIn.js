@@ -25,7 +25,7 @@ function SignIn() {
         placeholder="Password..."
         required
       />
-      <button className="btn btn-secondary mb-3">Sign in</button>
+      <button className="w3-button w3-theme-d2 w3-round-large">Sign in</button>
     </form>
   );
 }
