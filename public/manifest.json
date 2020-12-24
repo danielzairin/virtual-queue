@@ -1,6 +1,6 @@
 {
-  "short_name": "vQueue",
-  "name": "Virtual Queue",
+  "short_name": "PogQueue",
+  "name": "PogQueue",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +18,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/ticket",
+  "start_url": "/discover",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#0d6efd",
   "background_color": "#ffffff"
 }
