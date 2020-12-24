@@ -39,6 +39,11 @@ function Ticket() {
     return () => unsubscribe();
   }, [queuer]);
 
+  function changeStatus(){
+
+
+  }
+
   // Statuses
   // 1. idle
   // 2. queueing
@@ -63,9 +68,9 @@ function Ticket() {
 
       {/* Render ticket for queuer's status */}
       {queuer.status === "queueing" ? (
-        <p>...........Queueing.............</p>
+        <p className="text-center mb-3">...........Queueing.............</p>
       ) : queuer.status === "allowed" ? (
-        <p>You may now enter now </p>
+        <p className="text-center mb-3">You may now enter now </p>
       ) : queuer.status === "denied" ? (
         <p>
           Your queue had been denied. Please abandon the queue.
@@ -83,7 +88,7 @@ function Ticket() {
       )}
 
       {queuer.status !== "idle" ? (
-        <button className="btn bg-primary" onClick={abandon}>Abandon</button>
+        <button className="btn btn-primary btn-block mb-3" onClick={abandon}>Abandon</button>
       ) : null}
 
       </div>
