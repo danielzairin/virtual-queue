@@ -47,7 +47,8 @@ function Ticket() {
 
   return (
     <div>
-      <h2>Ticket</h2>
+      <h2  className="text-center mb-3">Ticket</h2>
+      <div  class="container p-3 my-3 border center mb-3 rounded-lg ">
       <p>Queuer ID: {queuer.id}</p>
       <p>Status: {queuer.status}</p>
       <p>Queueing for: {establishment !== null ? establishment.name : null}</p>
@@ -60,19 +61,23 @@ function Ticket() {
         </p>
       ) : null}
 
-      {/* Rennder ticket if queuer's status is queueing */}
+      {/* Render ticket for queuer's status */}
       {queuer.status === "queueing" ? (
         <p>...........Queueing.............</p>
       ) : queuer.status === "allowed" ? (
         <p>You may now enter now </p>
       ) : queuer.status === "denied" ? (
         <p>
-          Your queue had been denied. Please enter queue again
-          <NavLink to="/discover">Discover</NavLink>
+          Your queue had been denied. Please abandon the queue.
+          <br />
+          <br />
+          {/*<NavLink to="/discover">Discover</NavLink>*/}
         </p>
       ) : (
         <p>
           You Need to Queue
+          <br />
+          <br />
           <NavLink to="/discover">Discover</NavLink>
         </p>
       )}
@@ -81,13 +86,7 @@ function Ticket() {
         <button onClick={abandon}>Abandon</button>
       ) : null}
 
-      {/* Render allowed message if queuer's status is allowed */}
-
-      {/* Render allowed message if queuer's status is denied */}
-
-      {/* Render not in queue message if queuer's status is idle */}
-
-      {/*    */}
+      </div>
     </div>
   );
 }
