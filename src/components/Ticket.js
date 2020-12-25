@@ -87,10 +87,8 @@ function Ticket() {
 
           {/* Message if queuer is denied */}
           {queuer.status === "denied" ? (
-            <div>
-              <p className="text-center">
-                Sorry, your entry was denied by the establishment.
-              </p>
+            <div className="text-center">
+              <p>Sorry, your entry was denied by the establishment.</p>
               <NavLink to="/discover">
                 Queue for a different establishment
               </NavLink>
@@ -99,8 +97,8 @@ function Ticket() {
 
           {/* Message if queuer is idle */}
           {queuer.status === "idle" ? (
-            <div>
-              <p className="text-center">You are not in any queue.</p>
+            <div className="text-center">
+              <p>You are not in any queue.</p>
               <NavLink to="/discover">Discover nearby queues</NavLink>
             </div>
           ) : null}
