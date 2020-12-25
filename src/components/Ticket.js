@@ -39,60 +39,75 @@ function Ticket() {
     return () => unsubscribe();
   }, [queuer]);
 
-
-  // Statuses
-  // 1. idle
-  // 2. queueing
-  // 3. allowed
-  // 4. denied
-
   return (
-    <div >
-      <h2  className="text-center mb-3">Ticket</h2>
-      <div  class="container p-3 my-3 border center mb-3 rounded-lg ">
-      <p>Queuer ID: {queuer.id}</p>
-      <p>Status: 
-        {queuer.status === "idle" ? (<span> Idle</span>) : 
-          queuer.status === "denied" ? (<span> Denied</span>) :
-          queuer.status === "allowed" ? (<span> Allowed</span>) :
-          queuer.status === "queueing" ? (<span> In Queue</span>): null
-        }
-      </p>
-      <p>Queueing for: {establishment !== null ? establishment.name : null}</p>
-      {establishment !== null ? (
-        <p>
-          Queue position:{" "}
-          {establishment.queuers.findIndex((element) => element === queuer.id) +
-            1}{" "}
-          of {establishment.queuers.length}
-        </p>
-      ) : null}
+    <div>
+      <div className="card">
+        <div className="card-body">
+          {/* Queuer ID */}
+          <p className="display-3 text-center">{queuer.id.slice(0, 4)}</p>
+          <hr />
 
-      {/* Render ticket for queuer's status */}
-      {queuer.status === "queueing" ? (
-        <p className="text-center mb-3">...........Queueing.............</p>
-      ) : queuer.status === "allowed" ? (
-        <p className="text-center mb-3">You may now enter now </p>
-      ) : queuer.status === "denied" ? (
-        <p>
-          Your queue had been denied. Please abandon the queue.
-          <br />
-          <br />
-          {/*<NavLink to="/discover">Discover</NavLink>*/}
-        </p>
-      ) : (
-        <p>
-          You Need to Queue
-          <br />
-          <br />
-          <NavLink to="/discover">Discover</NavLink>
-        </p>
-      )}
+          {/* Queuer status */}
+          {queuer.status !== "idle" && establishment !== null ? (
+            <p className="text-center">
+              {establishment.name} -
+              {queuer.status === "denied" ? (
+                <span className="text-danger"> Denied</span>
+              ) : queuer.status === "allowed" ? (
+                <span className="text-success"> Allowed</span>
+              ) : queuer.status === "queueing" ? (
+                <span> Queueing</span>
+              ) : null}
+            </p>
+          ) : null}
 
-      {queuer.status !== "idle" ? (
-        <button className="btn btn-primary btn-block mb-3" onClick={abandon}>Abandon</button>
-      ) : null}
+          {/* Message if queuer is queueing */}
+          {queuer.status === "queueing" && establishment !== null ? (
+            <div>
+              <p className="text-center">
+                Position{" "}
+                {establishment.queuers.findIndex(
+                  (element) => element === queuer.id
+                ) + 1}{" "}
+                out of {establishment.queuers.length}
+              </p>
+              <button
+                className="btn btn-primary btn-block mb-3"
+                onClick={abandon}
+              >
+                Abandon
+              </button>
+            </div>
+          ) : null}
 
+          {/* Message if queuer is allowed */}
+          {queuer.status === "allowed" ? (
+            <div className="text-center">
+              <p>You may now enter the establishment.</p>
+              <p>Please show this ticket to the queue attendant when asked.</p>
+            </div>
+          ) : null}
+
+          {/* Message if queuer is denied */}
+          {queuer.status === "denied" ? (
+            <div>
+              <p className="text-center">
+                Sorry, your entry was denied by the establishment.
+              </p>
+              <NavLink to="/discover">
+                Queue for a different establishment
+              </NavLink>
+            </div>
+          ) : null}
+
+          {/* Message if queuer is idle */}
+          {queuer.status === "idle" ? (
+            <div>
+              <p className="text-center">You are not in any queue.</p>
+              <NavLink to="/discover">Discover nearby queues</NavLink>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );
