@@ -71,10 +71,7 @@ function Ticket() {
                 ) + 1}{" "}
                 out of {establishment.queuers.length}
               </p>
-              <button
-                className="btn btn-primary btn-block mb-3"
-                onClick={abandon}
-              >
+              <button className="btn btn-danger btn-block" onClick={abandon}>
                 Abandon
               </button>
             </div>

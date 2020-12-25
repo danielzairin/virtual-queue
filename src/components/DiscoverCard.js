@@ -46,7 +46,11 @@ function DiscoverCard(props) {
       ) : (
         <p>Nobody in queue</p>
       )}
-      <button onClick={enqueue} className="btn btn-primary">
+      <button
+        disabled={queuer.status === "queueing"}
+        onClick={enqueue}
+        className="btn btn-primary"
+      >
         Enqueue
       </button>
     </div>

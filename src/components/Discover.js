@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DiscoverCard from "./DiscoverCard";
 import { db } from "../firebase";
+import { QueuerContext } from "../contexts/QueuerContext";
 
 function Discover() {
   const [establishments, setEstablishments] = useState([]);
+  const queuer = useContext(QueuerContext);
 
   useEffect(() => {
     // 1. Get current location
@@ -27,6 +29,11 @@ function Discover() {
   return (
     <div>
       <h2 className="text-center mb-3">Queues Nearby</h2>
+      {queuer.status === "queueing" ? (
+        <p className="text-center font-italic">
+          You can only queue for one establishment at a time.
+        </p>
+      ) : null}
 
       {/* Render LIST of discover cards*/}
       <ol className="list-group">
