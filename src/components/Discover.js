@@ -5,25 +5,42 @@ import { QueuerContext } from "../contexts/QueuerContext";
 
 function Discover() {
   const [establishments, setEstablishments] = useState([]);
+  const [loading, setLoading] = useState(true);
   const queuer = useContext(QueuerContext);
 
   useEffect(() => {
-    // 1. Get current location
+    setLoading(true);
 
-    // 2. Get establishments from database
-    db.collection("establishments")
-      .where("isOpen", "==", true)
-      .get()
-      .then((docs) => {
-        const data = [];
+    // Get current location
+    navigator.geolocation.getCurrentPosition((loc) => {
+      const { latitude, longitude } = loc.coords;
 
-        docs.forEach((doc) => {
-          data.push({ id: doc.id, ...doc.data() });
+      // Get establishments from database that are open
+      db.collection("establishments")
+        .where("isOpen", "==", true)
+        .get()
+        .then((docs) => {
+          let establishments = [];
+
+          docs.forEach((doc) => {
+            establishments.push({ id: doc.id, ...doc.data() });
+          });
+
+          // Filter based on current location
+          establishments = establishments.filter((establishment) => {
+            return (
+              latitude >= establishment.latitude - 0.003 &&
+              latitude <= establishment.latitude + 0.003 &&
+              longitude >= establishment.longitude - 0.003 &&
+              longitude <= establishment.longitude + 0.003
+            );
+          });
+
+          // setEstablishments
+          setEstablishments(establishments);
+          setLoading(false);
         });
-
-        // 3. setEstablishments
-        setEstablishments(data);
-      });
+    });
   }, []);
 
   return (
@@ -35,18 +52,23 @@ function Discover() {
         </p>
       ) : null}
 
-      {/* Render LIST of discover cards*/}
-      <ol className="list-group">
-        {establishments.map((establishment) => (
-          <li key={establishment.id} className="list-group-item">
-            <DiscoverCard
-              name={establishment.name}
-              id={establishment.id}
-              queueLength={establishment.queuers.length}
-            />
-          </li>
-        ))}
-      </ol>
+      {establishments.length && !loading > 0 ? (
+        <ol className="list-group">
+          {establishments.map((establishment) => (
+            <li key={establishment.id} className="list-group-item">
+              <DiscoverCard
+                name={establishment.name}
+                id={establishment.id}
+                queueLength={establishment.queuers.length}
+              />
+            </li>
+          ))}
+        </ol>
+      ) : loading ? (
+        <p className="text-center">Scanning...</p>
+      ) : (
+        <p className="text-center">There are no queues near you.</p>
+      )}
     </div>
   );
 }
