@@ -39,12 +39,27 @@ function Ticket() {
     return () => unsubscribe();
   }, [queuer]);
 
+  return (
+    <div>
+      <div className="card">
+        <div className="card-body">
+          {/* Queuer ID */}
+          <p className="display-3 text-center">{queuer.id.slice(0, 4)}</p>
+          <hr />
 
-  // Statuses
-  // 1. idle
-  // 2. queueing
-  // 3. allowed
-  // 4. denied
+          {/* Queuer status */}
+          {queuer.status !== "idle" && establishment !== null ? (
+            <p className="text-center">
+              {establishment.name} -
+              {queuer.status === "denied" ? (
+                <span className="text-danger"> Denied</span>
+              ) : queuer.status === "allowed" ? (
+                <span className="text-success"> Allowed</span>
+              ) : queuer.status === "queueing" ? (
+                <span> Queueing</span>
+              ) : null}
+            </p>
+          ) : null}
 
   return (
     <div >
@@ -154,10 +169,24 @@ function Ticket() {
         </p>
       )}
 
-      {queuer.status !== "idle" ? (
-        <button className="btn btn-primary btn-block mb-3" onClick={abandon}>Abandon</button>
-      ) : null}
+          {/* Message if queuer is denied */}
+          {queuer.status === "denied" ? (
+            <div className="text-center">
+              <p>Sorry, your entry was denied by the establishment.</p>
+              <NavLink to="/discover">
+                Queue for a different establishment
+              </NavLink>
+            </div>
+          ) : null}
 
+          {/* Message if queuer is idle */}
+          {queuer.status === "idle" ? (
+            <div className="text-center">
+              <p>You are not in any queue.</p>
+              <NavLink to="/discover">Discover nearby queues</NavLink>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
       

@@ -8,8 +8,8 @@ function DiscoverCard(props) {
   const history = useHistory();
 
   function enqueue() {
-    // 1. Proceed if queuer's status is idle
-    if (queuer.status === "idle") {
+    // 1. Proceed if queuer is not queueing
+    if (queuer.status !== "queueing") {
       // 2. Add queuer to establishment's queue
       db.collection("establishments")
         .doc(props.id)
@@ -46,7 +46,11 @@ function DiscoverCard(props) {
       ) : (
         <p>Nobody in queue</p>
       )}
-      <button onClick={enqueue} className="btn btn-primary">
+      <button
+        disabled={queuer.status === "queueing"}
+        onClick={enqueue}
+        className="btn btn-primary"
+      >
         Enqueue
       </button>
     </div>

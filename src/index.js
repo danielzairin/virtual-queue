@@ -5,6 +5,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import QueuerContextProvider from "./contexts/QueuerContext";
 import EstablishmentContextProvider from "./contexts/EstablishmentContext";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 ReactDOM.render(
   <EstablishmentContextProvider>
@@ -16,3 +17,5 @@ ReactDOM.render(
   </EstablishmentContextProvider>,
   document.querySelector("#root")
 );
+
+serviceWorkerRegistration.register();

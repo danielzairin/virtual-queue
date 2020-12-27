@@ -14,15 +14,14 @@ function App() {
 
   return (
     <div>
-      <div className="bg-warning fixed-top p-2 text-center">
-        <i>Remember to push and pull from GitHub!</i>
-      </div>
       {queuer === null ? (
-        <div className="spinner-border text-secondary">
-          {/*<p>Connecting to database...</p>*/}
+        // Loading spinner
+        <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
+          <div className="spinner-border"></div>
+          <p className="mt-3">Connecting to database...</p>
         </div>
       ) : (
-        <div className="pt-5 " >
+        <div>
           {/* Routes */}
           <Switch>
             <Route path="/discover">
