@@ -78,6 +78,18 @@ function Ticket() {
               <NavLink to="/discover">Discover nearby queues</NavLink>
             </div>
           ) : null}
+
+          {/* Message if queuer is queuieng */}
+          {queuer.status === "queueing" ? (
+            <div className="text-center container">
+              <h2 className="text-center mb-3" > 
+                {establishment.queuers.findIndex((element) => element === queuer.id) + 1}
+              </h2>
+              <p className="text-center mb-3"> 
+                out of {establishment.queuers.length}
+              </p>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
