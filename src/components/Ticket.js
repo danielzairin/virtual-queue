@@ -61,6 +61,31 @@ function Ticket() {
             </p>
           ) : null}
 
+            {/* Message if queuer is denied */}
+            {queuer.status === "denied" ? (
+            <div className="text-center">
+              <p>Sorry, your entry was denied by the establishment.</p>
+              <NavLink to="/discover">
+                Queue for a different establishment
+              </NavLink>
+            </div>
+          ) : null}
+
+          {/* Message if queuer is idle */}
+          {queuer.status === "idle" ? (
+            <div className="text-center">
+              <p>You are not in any queue.</p>
+              <NavLink to="/discover">Discover nearby queues</NavLink>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </div>
+      
+  );
+
+
+  {/*
   return (
     <div >
       
@@ -94,7 +119,7 @@ function Ticket() {
       <p className="text-center mb-3">📍 {establishment !== null ? establishment.name : null}</p>
       
 
-      {/* Render ticket for queuer's status */}
+      {/* Render ticket for queuer's status *
       {queuer.status === "queueing" ? (
         <p className="text-center mb-3">Queueing</p>
       ) : queuer.status === "allowed" ? (
@@ -120,7 +145,8 @@ function Ticket() {
 
       </div>
     </div>
-  );
+    </div>
+      );*/}
 
 
 
@@ -167,30 +193,9 @@ function Ticket() {
           <br />
           <NavLink to="/discover">Discover</NavLink>
         </p>
-      )}
+      )}*/}
 
-          {/* Message if queuer is denied */}
-          {queuer.status === "denied" ? (
-            <div className="text-center">
-              <p>Sorry, your entry was denied by the establishment.</p>
-              <NavLink to="/discover">
-                Queue for a different establishment
-              </NavLink>
-            </div>
-          ) : null}
-
-          {/* Message if queuer is idle */}
-          {queuer.status === "idle" ? (
-            <div className="text-center">
-              <p>You are not in any queue.</p>
-              <NavLink to="/discover">Discover nearby queues</NavLink>
-            </div>
-          ) : null}
-        </div>
-      </div>
-    </div>
-      
-  );  */}
+          
 }
 
 export default Ticket;
