@@ -7,6 +7,18 @@ function Ticket() {
   const queuer = useContext(QueuerContext);
   const [establishment, setEstablishment] = useState(null);
 
+  {/*Function to get current time*/}
+  const date = new Date()
+  const hours = date.getHours()
+  let timeOfDay
+        
+  if (hours < 12) {
+    timeOfDay = "morning"
+  } else if (hours >= 12 && hours < 17) {
+     timeOfDay = "afternoon"
+  } else {
+     timeOfDay = "night"
+  }
   function abandon() {
     db.collection("queuers").doc(queuer.id).update({
       status: "idle",
@@ -42,6 +54,11 @@ function Ticket() {
   return (
     <div>
       <div className="card">
+        <div className="card-header text-center">
+        {queuer.status !== "idle" && establishment !== null ? (
+          <h3>{establishment.name}</h3>
+        ) : null}
+          </div>
         <div className="card-body">
           {/* Queuer ID */}
           <p className="display-3 text-center">{queuer.id.slice(0, 4)}</p>
@@ -50,7 +67,6 @@ function Ticket() {
           {/* Queuer status */}
           {queuer.status !== "idle" && establishment !== null ? (
             <p className="text-center">
-              {establishment.name} -
               {queuer.status === "denied" ? (
                 <span className="text-danger"> Denied</span>
               ) : queuer.status === "allowed" ? (
@@ -80,14 +96,20 @@ function Ticket() {
           ) : null}
 
           {/* Message if queuer is queuieng */}
-          {queuer.status === "queueing" ? (
+          {queuer.status === "queueing" && establishment !== null ? (
             <div className="text-center container">
+              <h4>Good {timeOfDay} sir, Thank you for waiting.</h4>
+              <p>🌕🌕🌕</p>
+              <p>Here's is your position in the queue</p>
               <h2 className="text-center mb-3" > 
                 {establishment.queuers.findIndex((element) => element === queuer.id) + 1}
               </h2>
               <p className="text-center mb-3"> 
                 out of {establishment.queuers.length}
               </p>
+              <p>We'll notify you when your turn</p>
+              <p>You can cancel the queue by press the button</p>
+              <button className="btn btn-primary btn-block mb-3" onClick={abandon}>Abandon</button>
             </div>
           ) : null}
         </div>
