@@ -37,7 +37,7 @@ function DiscoverCard(props) {
 
   return (
     <div>
-      <h2>{props.name}</h2>
+      <h2 className="text-capitalize">{props.name}</h2>
       {props.queueLength > 0 ? (
         <p>
           {props.queueLength} {props.queueLength === 1 ? "person" : "people"} in

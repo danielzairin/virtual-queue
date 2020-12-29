@@ -54,10 +54,12 @@ function Ticket() {
   return (
     <div>
       <div className="card">
-        <div className="card-header text-center">
-        {queuer.status !== "idle" && establishment !== null ? (
+        <div className="card-header text-center bg-primary text-white text-capitalize">
+        {queuer.status === "idle"? (
+          <h3>Establishment</h3>
+        ) : establishment !== null ? (
           <h3>{establishment.name}</h3>
-        ) : null}
+          ) : null}
           </div>
         <div className="card-body">
           {/* Queuer ID */}
@@ -77,10 +79,20 @@ function Ticket() {
             </p>
           ) : null}
 
+          {/* Message if queuer is allowed */}
+          {queuer.status === "allowed" ? (
+            <div className="text-center">
+              <p>You may enter now.</p>
+              <p>🌕🌕🌕</p>
+              <h4>Thank you for your consideration</h4>
+            </div>
+          ) : null}
+
             {/* Message if queuer is denied */}
             {queuer.status === "denied" ? (
             <div className="text-center">
               <p>Sorry, your entry was denied by the establishment.</p>
+              <p>🌕🌕🌕</p>
               <NavLink to="/discover">
                 Queue for a different establishment
               </NavLink>
@@ -91,6 +103,7 @@ function Ticket() {
           {queuer.status === "idle" ? (
             <div className="text-center">
               <p>You are not in any queue.</p>
+              <p>🌕🌕🌕</p>
               <NavLink to="/discover">Discover nearby queues</NavLink>
             </div>
           ) : null}
@@ -98,18 +111,21 @@ function Ticket() {
           {/* Message if queuer is queuieng */}
           {queuer.status === "queueing" && establishment !== null ? (
             <div className="text-center container">
-              <h4>Good {timeOfDay} sir, Thank you for waiting.</h4>
+              <h4>Good {timeOfDay} sir, <br /> Thank you for waiting.</h4>
               <p>🌕🌕🌕</p>
               <p>Here's is your position in the queue</p>
+
+              <div className="container">              
               <h2 className="text-center mb-3" > 
                 {establishment.queuers.findIndex((element) => element === queuer.id) + 1}
               </h2>
               <p className="text-center mb-3"> 
                 out of {establishment.queuers.length}
               </p>
+              </div>
               <p>We'll notify you when your turn</p>
-              <p>You can cancel the queue by press the button</p>
-              <button className="btn btn-primary btn-block mb-3" onClick={abandon}>Abandon</button>
+              <p>Press the button to cancel the queue</p>
+              <button className="btn btn-danger btn-block mb-3" onClick={abandon}>Abandon</button>
             </div>
           ) : null}
         </div>
