@@ -7,18 +7,20 @@ function Ticket() {
   const queuer = useContext(QueuerContext);
   const [establishment, setEstablishment] = useState(null);
 
-  {/*Function to get current time*/}
-  const date = new Date()
-  const hours = date.getHours()
-  let timeOfDay
-        
-  if (hours < 12) {
-    timeOfDay = "morning"
-  } else if (hours >= 12 && hours < 17) {
-     timeOfDay = "afternoon"
-  } else {
-     timeOfDay = "night"
+  // Function to get current time of day's greeting
+  function getTimeOfDay() {
+    const date = new Date();
+    const hours = date.getHours();
+
+    if (hours < 12) {
+      return "morning";
+    } else if (hours >= 12 && hours < 17) {
+      return "afternoon";
+    } else {
+      return "evening";
+    }
   }
+
   function abandon() {
     db.collection("queuers").doc(queuer.id).update({
       status: "idle",
@@ -54,11 +56,11 @@ function Ticket() {
   return (
     <div>
       <div className="card">
-        <div className="card-header text-center">
-        {queuer.status !== "idle" && establishment !== null ? (
-          <h3>{establishment.name}</h3>
-        ) : null}
-          </div>
+        <div className="card-header text-center text-light bg-primary">
+          {queuer.status !== "idle" && establishment !== null ? (
+            <h3>{establishment.name}</h3>
+          ) : null}
+        </div>
         <div className="card-body">
           {/* Queuer ID */}
           <p className="display-3 text-center">{queuer.id.slice(0, 4)}</p>
@@ -71,19 +73,27 @@ function Ticket() {
                 <span className="text-danger"> Denied</span>
               ) : queuer.status === "allowed" ? (
                 <span className="text-success"> Allowed</span>
-              ) : queuer.status === "queueing" ? (
-                <span> Queueing</span>
               ) : null}
             </p>
           ) : null}
 
-            {/* Message if queuer is denied */}
-            {queuer.status === "denied" ? (
+          {/* Message if queuer is denied */}
+          {queuer.status === "denied" ? (
             <div className="text-center">
               <p>Sorry, your entry was denied by the establishment.</p>
               <NavLink to="/discover">
                 Queue for a different establishment
               </NavLink>
+            </div>
+          ) : null}
+
+          {/* Message if queuer is denied */}
+          {queuer.status === "allowed" ? (
+            <div className="text-center">
+              <p>You may now enter the establishment.</p>
+              <p>
+                Please present this ticket to the queue attendant when asked.
+              </p>
             </div>
           ) : null}
 
@@ -98,138 +108,30 @@ function Ticket() {
           {/* Message if queuer is queuieng */}
           {queuer.status === "queueing" && establishment !== null ? (
             <div className="text-center container">
-              <h4>Good {timeOfDay} sir, Thank you for waiting.</h4>
-              <p>🌕🌕🌕</p>
-              <p>Here's is your position in the queue</p>
-              <h2 className="text-center mb-3" > 
-                {establishment.queuers.findIndex((element) => element === queuer.id) + 1}
+              <p>Current position in queue:</p>
+              <h2 className="text-center mb-3">
+                {establishment.queuers.findIndex(
+                  (element) => element === queuer.id
+                ) + 1}
               </h2>
-              <p className="text-center mb-3"> 
+              <p className="text-center mb-3">
                 out of {establishment.queuers.length}
               </p>
-              <p>We'll notify you when your turn</p>
-              <p>You can cancel the queue by press the button</p>
-              <button className="btn btn-primary btn-block mb-3" onClick={abandon}>Abandon</button>
+              <hr />
+              <p>Good {getTimeOfDay()}, thank you for waiting.</p>
+              <p>We'll notify you once you are allowed to enter.</p>
+              <button
+                className="btn btn-danger btn-block mb-3"
+                onClick={abandon}
+              >
+                Abandon
+              </button>
             </div>
           ) : null}
         </div>
       </div>
     </div>
-      
   );
-
-
-  {/*
-  return (
-    <div >
-      
-      <div  class="container p-3 my-3 border center mb-3 rounded-lg ">
-      
-      {establishment !== null ? (
-      <div>
-        <h2 className="text-center mb-3">
-          Position
-        </h2>
-        <div className="rounded-circle bg-primary mx-auto ">
-        <h3 className="text-center mb-3" > 
-          {establishment.queuers.findIndex((element) => element === queuer.id) +
-            1}
-        </h3>
-        <p className="text-center mb-3"> 
-          out of {establishment.queuers.length}
-        </p>
-        </div>
-       </div> 
-      ) : null}
-
-      <p className="text-center mb-3">🌝 {queuer.id}</p>
-      <p className="text-center mb-3">🧾 
-        {queuer.status === "idle" ? (<span> Idle</span>) : 
-          queuer.status === "denied" ? (<span> Denied</span>) :
-          queuer.status === "allowed" ? (<span> Allowed</span>) :
-          queuer.status === "queueing" ? (<span> In Queue</span>): null
-        }
-      </p>
-      <p className="text-center mb-3">📍 {establishment !== null ? establishment.name : null}</p>
-      
-
-      {/* Render ticket for queuer's status *
-      {queuer.status === "queueing" ? (
-        <p className="text-center mb-3">Queueing</p>
-      ) : queuer.status === "allowed" ? (
-        <p className="text-center mb-3">You may now enter now </p>
-      ) : queuer.status === "denied" ? (
-        <p>
-          Your queue had been denied. Please abandon the queue.
-          <br />
-          
-        </p>
-      ) : (
-        <p>
-          You Need to Queue
-          <br />
-          <br />
-          <NavLink to="/discover">Discover</NavLink>
-        </p>
-      )}
-
-      {queuer.status !== "idle" ? (
-        <button className="btn btn-primary btn-block mb-3" onClick={abandon}>Abandon</button>
-      ) : null}
-
-      </div>
-    </div>
-    </div>
-      );*/}
-
-
-
-    {/*just in case for backup*/}
-        
-
-    {/*<div >
-      <h2  className="text-center mb-3">Ticket</h2>
-      <div  class="container p-3 my-3 border center mb-3 rounded-lg ">
-      <p>Queuer ID: {queuer.id}</p>
-      <p>Status: 
-        {queuer.status === "idle" ? (<span> Idle</span>) : 
-          queuer.status === "denied" ? (<span> Denied</span>) :
-          queuer.status === "allowed" ? (<span> Allowed</span>) :
-          queuer.status === "queueing" ? (<span> In Queue</span>): null
-        }
-      </p>
-      <p>Queueing for: {establishment !== null ? establishment.name : null}</p>
-      {establishment !== null ? (
-        <p>
-          Queue position:{" "}
-          {establishment.queuers.findIndex((element) => element === queuer.id) +
-            1}{" "}
-          of {establishment.queuers.length}
-        </p>
-      ) : null}
-
-      {/* Render ticket for queuer's status *}
-      {queuer.status === "queueing" ? (
-        <p className="text-center mb-3">...........Queueing.............</p>
-      ) : queuer.status === "allowed" ? (
-        <p className="text-center mb-3">You may now enter now </p>
-      ) : queuer.status === "denied" ? (
-        <p>
-          Your queue had been denied. Please abandon the queue.
-          <br />
-          <br />
-          
-        </p>
-      ) : (
-        <p>
-          You Need to Queue
-          <br />
-          <br />
-          <NavLink to="/discover">Discover</NavLink>
-        </p>
-      )}*/}
-
-          
 }
 
 export default Ticket;
