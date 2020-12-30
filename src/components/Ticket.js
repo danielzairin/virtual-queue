@@ -55,23 +55,12 @@ function Ticket() {
 
   return (
     <div>
-<<<<<<< HEAD
-      <div className="card">
-        <div className="card-header text-center bg-primary text-white text-capitalize">
-        {queuer.status === "idle"? (
-          <h3>Establishment</h3>
-        ) : establishment !== null ? (
-          <h3>{establishment.name}</h3>
-          ) : null}
-          </div>
-=======
       <div className="card shadow">
         <div className="card-header text-center text-light bg-primary">
           {queuer.status !== "idle" && establishment !== null ? (
             <h3>{establishment.name}</h3>
           ) : null}
         </div>
->>>>>>> 7f04f9073da3db879b81450ea6e79daeac20a03e
         <div className="card-body">
           {/* Queuer ID */}
           <p className="display-3 text-center">{queuer.id.slice(0, 4)}</p>
@@ -88,27 +77,17 @@ function Ticket() {
             </p>
           ) : null}
 
-          {/* Message if queuer is allowed */}
-          {queuer.status === "allowed" ? (
-            <div className="text-center">
-              <p>You may enter now.</p>
-              <p>🌕🌕🌕</p>
-              <h4>Thank you for your consideration</h4>
-            </div>
-          ) : null}
-
-            {/* Message if queuer is denied */}
-            {queuer.status === "denied" ? (
+          {/* Message if queuer is denied */}
+          {queuer.status === "denied" ? (
             <div className="text-center">
               <p>Sorry, your entry was denied by the establishment.</p>
-              <p>🌕🌕🌕</p>
               <NavLink to="/discover">
                 Queue for a different establishment
               </NavLink>
             </div>
           ) : null}
 
-          {/* Message if queuer is denied */}
+          {/* Message if queuer is allowed */}
           {queuer.status === "allowed" ? (
             <div className="text-center">
               <p>You may now enter the establishment.</p>
@@ -122,7 +101,6 @@ function Ticket() {
           {queuer.status === "idle" ? (
             <div className="text-center">
               <p>You are not in any queue.</p>
-              <p>🌕🌕🌕</p>
               <NavLink to="/discover">Discover nearby queues</NavLink>
             </div>
           ) : null}
@@ -130,31 +108,15 @@ function Ticket() {
           {/* Message if queuer is queuieng */}
           {queuer.status === "queueing" && establishment !== null ? (
             <div className="text-center container">
-<<<<<<< HEAD
-              <h4>Good {timeOfDay} sir, <br /> Thank you for waiting.</h4>
-              <p>🌕🌕🌕</p>
-              <p>Here's is your position in the queue</p>
-
-              <div className="container">              
-              <h2 className="text-center mb-3" > 
-                {establishment.queuers.findIndex((element) => element === queuer.id) + 1}
-=======
               <p>Current position in queue:</p>
               <h2 className="text-center mb-3">
                 {establishment.queuers.findIndex(
                   (element) => element === queuer.id
                 ) + 1}
->>>>>>> 7f04f9073da3db879b81450ea6e79daeac20a03e
               </h2>
               <p className="text-center mb-3">
                 out of {establishment.queuers.length}
               </p>
-<<<<<<< HEAD
-              </div>
-              <p>We'll notify you when your turn</p>
-              <p>Press the button to cancel the queue</p>
-              <button className="btn btn-danger btn-block mb-3" onClick={abandon}>Abandon</button>
-=======
               <hr />
               <p>Good {getTimeOfDay()}, thank you for waiting.</p>
               <p>We'll notify you once you are allowed to enter.</p>
@@ -164,7 +126,6 @@ function Ticket() {
               >
                 Abandon
               </button>
->>>>>>> 7f04f9073da3db879b81450ea6e79daeac20a03e
             </div>
           ) : null}
         </div>
