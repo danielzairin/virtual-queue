@@ -55,7 +55,7 @@ function Ticket() {
 
   return (
     <div>
-      <div className="card">
+      <div className="card shadow">
         <div className="card-header text-center text-light bg-primary">
           {queuer.status !== "idle" && establishment !== null ? (
             <h3>{establishment.name}</h3>
