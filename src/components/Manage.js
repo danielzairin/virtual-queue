@@ -52,7 +52,7 @@ function Manage() {
           <h3 className="mb-3">List of queuers</h3>
           <ul className="list-group">
             {establishment.queuers.map((queuerId) => (
-              <li className="list-group-item" key={queuerId}>
+              <li className="list-group-item shadow mb-3" key={queuerId}>
                 <ManageCard
                   queuerId={queuerId}
                   establishmentId={establishment.id}

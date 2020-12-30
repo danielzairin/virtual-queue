@@ -55,7 +55,7 @@ function Discover() {
       {establishments.length && !loading > 0 ? (
         <ol className="list-group">
           {establishments.map((establishment) => (
-            <li key={establishment.id} className="list-group-item">
+            <li key={establishment.id} className="list-group-item shadow mb-3">
               <DiscoverCard
                 name={establishment.name}
                 id={establishment.id}
