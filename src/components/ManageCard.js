@@ -1,33 +1,56 @@
-import firebase, { db } from "../firebase";
+import firebase, { db, functions } from "../firebase";
 
 function ManageCard(props) {
   function allowEntry() {
-    // 1. Set queuer's status to allowed
+    // Set queuer's status to allowed
     db.collection("queuers").doc(props.queuerId).update({
       status: "allowed",
     });
 
-    // 2. Remove queuer from establishment's queue
+    // Remove queuer from establishment's queue
     db.collection("establishments")
       .doc(props.establishmentId)
       .update({
         queuers: firebase.firestore.FieldValue.arrayRemove(props.queuerId),
       });
+
+    // Send push notification
+    const sendNotification = functions.httpsCallable("sendNotification");
+
+    sendNotification({
+      queuerId: props.queuerId,
+      notification: {
+        title: "PogQueue Status",
+        body: "You may now enter the establishment.",
+      },
+    }).catch((err) => console.log(err));
   }
 
   function denyEntry() {
-    // 1. Set queuer's status to denied
+    // Set queuer's status to denied
     db.collection("queuers").doc(props.queuerId).update({
       status: "denied",
     });
 
-    // 2. Remove queuer from establishment's queue
+    // Remove queuer from establishment's queue
     db.collection("establishments")
       .doc(props.establishmentId)
       .update({
         queuers: firebase.firestore.FieldValue.arrayRemove(props.queuerId),
       });
+
+    // Send push notification
+    const sendNotification = functions.httpsCallable("sendNotification");
+
+    sendNotification({
+      queuerId: props.queuerId,
+      notification: {
+        title: "PogQueue Status",
+        body: "Sorry, your entry was denied by the establishment.",
+      },
+    }).catch((err) => console.log(err));
   }
+
   return (
     <div className="text-left d-flex flex-row align-items-center">
       {/* Render queuer's ID */}

@@ -1,5 +1,5 @@
 import { useEffect, createContext, useState } from "react";
-import { db } from "../firebase";
+import { db, messaging } from "../firebase";
 
 export const QueuerContext = createContext();
 
@@ -10,9 +10,9 @@ export function QueuerContextProvider(props) {
     async function listen() {
       let queuerId = localStorage.getItem("queuerId");
 
-      // 1. If queuer ID is NOT in local storage
+      // If queuer ID is NOT in local storage
       if (queuerId === null) {
-        // 1.1 Create new queuer in database
+        // Create new queuer in database
         await db
           .collection("queuers")
           .add({
@@ -20,14 +20,37 @@ export function QueuerContextProvider(props) {
             queueingFor: null,
           })
           .then((docRef) => {
-            // 1.2 Store new queuer's ID in local storage
+            // Store new queuer's ID in local storage
             localStorage.setItem("queuerId", docRef.id);
             queuerId = docRef.id;
           })
           .catch((error) => console.error(error));
       }
 
-      // 2. Listen to changes in database
+      // Get notification token
+      const registration = await navigator.serviceWorker.getRegistration("/");
+
+      messaging
+        .getToken({
+          vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
+          serviceWorkerRegistration: registration,
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            db.collection("tokens").doc(queuerId).set({
+              token: currentToken,
+            });
+          } else {
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+          }
+        })
+        .catch((err) => {
+          console.error("An error occurred while retrieving token. ", err);
+        });
+
+      // Listen to changes in database
       return db
         .collection("queuers")
         .doc(queuerId)
