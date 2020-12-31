@@ -22,6 +22,7 @@ function ManageCard(props) {
       notification: {
         title: "PogQueue Status",
         body: "You may now enter the establishment.",
+        icon: "/logo192.png",
       },
     }).catch((err) => console.log(err));
   }
@@ -47,6 +48,7 @@ function ManageCard(props) {
       notification: {
         title: "PogQueue Status",
         body: "Sorry, your entry was denied by the establishment.",
+        icon: "/logo192.png",
       },
     }).catch((err) => console.log(err));
   }
