@@ -12,15 +12,24 @@ function Manage() {
         isOpen: false,
       });
     } else {
-      // 1. Get current position
-      navigator.geolocation.getCurrentPosition((position) => {
-        // 1.1 Update current position to database
-        db.collection("establishments").doc(establishment.id).update({
-          longitude: position.coords.longitude,
-          latitude: position.coords.latitude,
-          isOpen: true,
-        });
-      });
+      // Get current position
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Update current position to database
+          db.collection("establishments").doc(establishment.id).update({
+            longitude: position.coords.longitude,
+            latitude: position.coords.latitude,
+            isOpen: true,
+          });
+
+          // Make sure the error message is hidden
+          document.querySelector("#error-message").innerHTML = "";
+        },
+        () => {
+          document.querySelector("#error-message").innerHTML =
+            "Please enable location services to open the queue.";
+        }
+      );
     }
   }
 
@@ -31,10 +40,7 @@ function Manage() {
   return (
     <div className="text-center">
       {/* Render establishment's data */}
-      <h1>{establishment.name} </h1>
-      <p>
-        {establishment.latitude}, {establishment.longitude}
-      </p>
+      <h1 className="m-3">{establishment.name} </h1>
       <button
         className={establishment.isOpen ? "btn btn-danger" : "btn btn-success"}
         onClick={toggleOpen}
@@ -44,6 +50,7 @@ function Manage() {
       <button className="btn btn-secondary ml-2" onClick={signOut}>
         Sign out
       </button>
+      <p className="text-danger m-3" id="error-message"></p>
       <hr />
 
       {/* Render LIST of queuers */}
@@ -61,6 +68,14 @@ function Manage() {
             ))}
           </ul>
         </div>
+      ) : null}
+
+      {establishment.queuers.length === 0 && establishment.isOpen ? (
+        <p className="font-italic">Waiting for queuers...</p>
+      ) : null}
+
+      {establishment.queuers.length === 0 && !establishment.isOpen ? (
+        <p className="font-italic">Open the queue to be discoverable</p>
       ) : null}
     </div>
   );
