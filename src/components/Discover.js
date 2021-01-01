@@ -52,7 +52,7 @@ function Discover() {
         </p>
       ) : null}
 
-      {establishments.length && !loading > 0 ? (
+      {establishments.length > 0 && !loading ? (
         <ol className="list-group">
           {establishments.map((establishment) => (
             <li key={establishment.id} className="list-group-item shadow mb-3">
@@ -65,7 +65,9 @@ function Discover() {
           ))}
         </ol>
       ) : loading ? (
-        <p className="text-center">Scanning...</p>
+        <div className="d-flex justify-content-center">
+          <div className="spinner-border m-3"></div>
+        </div>
       ) : (
         <p className="text-center">There are no queues near you.</p>
       )}

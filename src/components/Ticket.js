@@ -56,11 +56,11 @@ function Ticket() {
   return (
     <div>
       <div className="card shadow">
-        <div className="card-header text-center text-light bg-primary">
-          {queuer.status !== "idle" && establishment !== null ? (
+        {queuer.status !== "idle" && establishment !== null ? (
+          <div className="card-header text-center text-light bg-primary">
             <h3>{establishment.name}</h3>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
         <div className="card-body">
           {/* Queuer ID */}
           <p className="display-3 text-center">{queuer.id.slice(0, 4)}</p>

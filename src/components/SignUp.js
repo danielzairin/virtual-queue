@@ -21,9 +21,13 @@ function SignUp() {
             latitude: null,
             queuers: [],
           })
-          .catch(console.error);
+          .catch((error) => {
+            document.querySelector("#error-message").innerHTML = error.message;
+          });
       })
-      .catch(console.error);
+      .catch((error) => {
+        document.querySelector("#error-message").innerHTML = error.message;
+      });
   }
 
   return (
@@ -34,6 +38,7 @@ function SignUp() {
         name="name"
         placeholder="Establishment name..."
         required
+        autoComplete="off"
       />
       <input
         className="form-control mb-3"
@@ -41,6 +46,7 @@ function SignUp() {
         name="email"
         placeholder="E-mail..."
         required
+        autoComplete="off"
       />
       <input
         className="form-control mb-3"
@@ -49,7 +55,8 @@ function SignUp() {
         placeholder="Password..."
         required
       />
-      <button className="btn btn-secondary btn-block mb-3">Sign up</button>
+      <p className="text-danger text-center" id="error-message"></p>
+      <button className="btn btn-primary btn-block mb-3">Sign up</button>
     </form>
   );
 }

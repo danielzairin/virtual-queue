@@ -49,7 +49,7 @@ function DiscoverCard(props) {
       <button
         disabled={queuer.status === "queueing"}
         onClick={enqueue}
-        className="btn btn-primary"
+        className="btn btn-primary btn-block"
       >
         Enqueue
       </button>

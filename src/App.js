@@ -4,24 +4,34 @@ import Discover from "./components/Discover";
 import Ticket from "./components/Ticket";
 import Manage from "./components/Manage";
 import { QueuerContext } from "./contexts/QueuerContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { EstablishmentContext } from "./contexts/EstablishmentContext";
 import Authenticate from "./components/Authenticate";
 
 function App() {
   const queuer = useContext(QueuerContext);
   const establishment = useContext(EstablishmentContext);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setWindowHeight(window.innerHeight);
+    });
+  }, []);
 
   return (
-    <div>
+    <div
+      className="container d-flex align-items-center"
+      style={{ height: `${windowHeight - 55}px` }}
+    >
       {queuer === null ? (
         // Loading spinner
-        <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
-          <div className="spinner-border"></div>
-          <p className="mt-3">Connecting to database...</p>
+        <div className="d-flex align-items-center flex-column w-100">
+          <div className="spinner-border m-3"></div>
+          <p>Connecting to database...</p>
         </div>
       ) : (
-        <div>
+        <div className="container">
           {/* Routes */}
           <Switch>
             <Route path="/discover">

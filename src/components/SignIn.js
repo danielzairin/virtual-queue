@@ -6,7 +6,9 @@ function SignIn() {
     const email = event.target["email"].value;
     const password = event.target["password"].value;
 
-    auth.signInWithEmailAndPassword(email, password).catch(console.error);
+    auth.signInWithEmailAndPassword(email, password).catch((error) => {
+      document.querySelector("#error-message").innerHTML = error.message;
+    });
   }
 
   return (
@@ -17,6 +19,7 @@ function SignIn() {
         name="email"
         placeholder="E-mail..."
         required
+        autoComplete="off"
       />
       <input
         className="form-control mb-3"
@@ -25,7 +28,8 @@ function SignIn() {
         placeholder="Password..."
         required
       />
-      <button className="btn btn-secondary btn-block mb-3">Sign in</button>
+      <p className="text-danger text-center" id="error-message"></p>
+      <button className="btn btn-primary btn-block mb-3">Sign in</button>
     </form>
   );
 }

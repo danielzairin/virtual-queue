@@ -6,15 +6,17 @@ function Authenticate() {
   const [signUpInstead, setSignUpInstead] = useState(false);
 
   return (
-    <div>
-      {signUpInstead ? <SignUp /> : <SignIn />}
-      <p
-        style={{ cursor: "pointer" }}
-        className="text-info text-center"
-        onClick={() => setSignUpInstead((prev) => !prev)}
-      >
-        {signUpInstead ? "I already have an account" : "Create an account"}
-      </p>
+    <div className="card">
+      <div className="card-body shadow">
+        {signUpInstead ? <SignUp /> : <SignIn />}
+        <button
+          style={{ cursor: "pointer" }}
+          className="btn btn-secondary btn-block"
+          onClick={() => setSignUpInstead((prev) => !prev)}
+        >
+          {signUpInstead ? "I already have an account" : "Create an account"}
+        </button>
+      </div>
     </div>
   );
 }
