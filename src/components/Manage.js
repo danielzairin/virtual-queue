@@ -1,10 +1,22 @@
-import { useContext } from "react";
-import { EstablishmentContext } from "../contexts/EstablishmentContext";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 import { db, auth } from "../firebase";
 import ManageCard from "./ManageCard";
 
 function Manage() {
-  const establishment = useContext(EstablishmentContext);
+  const { user, isSignedIn } = useContext(AuthContext);
+  const [establishment, setEstablishment] = useState(null);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      return db
+        .collection("establishments")
+        .doc(user.uid)
+        .onSnapshot((doc) => {
+          setEstablishment({ id: doc.id, ...doc.data() });
+        });
+    }
+  }, [user, isSignedIn]);
 
   function toggleOpen() {
     if (establishment.isOpen === true) {
@@ -39,43 +51,49 @@ function Manage() {
 
   return (
     <div className="text-center">
-      {/* Render establishment's data */}
-      <h1 className="m-3">{establishment.name} </h1>
-      <button
-        className={establishment.isOpen ? "btn btn-danger" : "btn btn-success"}
-        onClick={toggleOpen}
-      >
-        {establishment.isOpen ? "Close queue" : "Open queue"}
-      </button>
-      <button className="btn btn-secondary ml-2" onClick={signOut}>
-        Sign out
-      </button>
-      <p className="text-danger m-3" id="error-message"></p>
-      <hr />
-
-      {/* Render LIST of queuers */}
-      {establishment.queuers.length > 0 ? (
+      {isSignedIn && establishment ? (
         <div>
-          <h3 className="mb-3">List of queuers</h3>
-          <ul className="list-group">
-            {establishment.queuers.map((queuerId) => (
-              <li className="list-group-item shadow mb-3" key={queuerId}>
-                <ManageCard
-                  queuerId={queuerId}
-                  establishmentId={establishment.id}
-                />
-              </li>
-            ))}
-          </ul>
+          {/* Render establishment's data */}
+          <h1 className="m-3">{establishment.name} </h1>
+          <button
+            className={
+              establishment.isOpen ? "btn btn-danger" : "btn btn-success"
+            }
+            onClick={toggleOpen}
+          >
+            {establishment.isOpen ? "Close queue" : "Open queue"}
+          </button>
+          <button className="btn btn-secondary ml-2" onClick={signOut}>
+            Sign out
+          </button>
+          <p className="text-danger m-3" id="error-message"></p>
+          <hr />
+
+          {/* Render LIST of queuers */}
+          {establishment.queuers.length > 0 ? (
+            <div>
+              <h3 className="mb-3">List of queuers</h3>
+              <ul className="list-group">
+                {establishment.queuers.map((queuerId) => (
+                  <li className="list-group-item shadow mb-3" key={queuerId}>
+                    <ManageCard
+                      queuerId={queuerId}
+                      establishmentId={establishment.id}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {establishment.queuers.length === 0 && establishment.isOpen ? (
+            <p className="font-italic">Waiting for queuers...</p>
+          ) : null}
+
+          {establishment.queuers.length === 0 && !establishment.isOpen ? (
+            <p className="font-italic">Open the queue to be discoverable</p>
+          ) : null}
         </div>
-      ) : null}
-
-      {establishment.queuers.length === 0 && establishment.isOpen ? (
-        <p className="font-italic">Waiting for queuers...</p>
-      ) : null}
-
-      {establishment.queuers.length === 0 && !establishment.isOpen ? (
-        <p className="font-italic">Open the queue to be discoverable</p>
       ) : null}
     </div>
   );

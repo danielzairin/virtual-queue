@@ -4,17 +4,17 @@ import "./styles/index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import QueuerContextProvider from "./contexts/QueuerContext";
-import EstablishmentContextProvider from "./contexts/EstablishmentContext";
+import AuthContextProvider from "./contexts/AuthContext";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 ReactDOM.render(
-  <EstablishmentContextProvider>
+  <AuthContextProvider>
     <QueuerContextProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </QueuerContextProvider>
-  </EstablishmentContextProvider>,
+  </AuthContextProvider>,
   document.querySelector("#root")
 );
 

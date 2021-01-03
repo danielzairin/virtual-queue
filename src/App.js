@@ -5,12 +5,12 @@ import Ticket from "./components/Ticket";
 import Manage from "./components/Manage";
 import { QueuerContext } from "./contexts/QueuerContext";
 import { useContext, useEffect, useState } from "react";
-import { EstablishmentContext } from "./contexts/EstablishmentContext";
+import { AuthContext } from "./contexts/AuthContext";
 import Authenticate from "./components/Authenticate";
 
 function App() {
   const queuer = useContext(QueuerContext);
-  const establishment = useContext(EstablishmentContext);
+  const { isSignedIn } = useContext(AuthContext);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function App() {
               <Ticket />
             </Route>
             <Route path="/manage">
-              {establishment === null ? <Authenticate /> : <Manage />}
+              {isSignedIn ? <Manage /> : <Authenticate />}
             </Route>
             <Redirect to="/discover" />
           </Switch>
