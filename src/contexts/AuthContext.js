@@ -17,8 +17,6 @@ function AuthContextProvider(props) {
         setIsSignedIn(false);
         setUser(null);
       }
-
-      console.log(user);
     });
   }, []);
 
