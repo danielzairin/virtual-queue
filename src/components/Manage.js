@@ -46,7 +46,25 @@ function Manage() {
   }
 
   async function signOut() {
-    auth.signOut();
+    if (establishment.queuers.length === 0) return await auth.signOut();
+    else if (
+      window.confirm(
+        "Remaining queuers will be denied entry and the queue will be closed. Do you really want to sign-out?"
+      )
+    ) {
+      await establishment.queuers.forEach((queuerId) => {
+        db.collection("queuers").doc(queuerId).update({
+          status: "denied",
+        });
+      });
+
+      await db.collection("establishments").doc(establishment.id).update({
+        isOpen: false,
+        queuers: [],
+      });
+
+      await auth.signOut();
+    }
   }
 
   return (
