@@ -50,7 +50,7 @@ function Manage() {
   }
 
   return (
-    <div className="text-center">
+    <div className="container d-flex justify-content-center flex-column h-100 text-center">
       {isSignedIn && establishment ? (
         <div>
           {/* Render establishment's data */}

@@ -20,18 +20,15 @@ function App() {
   }, []);
 
   return (
-    <div
-      className="container d-flex align-items-center"
-      style={{ height: `${windowHeight - 55}px` }}
-    >
+    <div style={{ height: `${windowHeight - 55}px` }}>
       {queuer === null ? (
         // Loading spinner
-        <div className="d-flex align-items-center flex-column w-100">
+        <div className="d-flex align-items-center justify-content-center flex-column h-100">
           <div className="spinner-border m-3"></div>
           <p>Connecting to database...</p>
         </div>
       ) : (
-        <div className="container">
+        <div className="h-100 w-100">
           {/* Routes */}
           <Switch>
             <Route path="/discover">

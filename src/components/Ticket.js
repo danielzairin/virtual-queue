@@ -54,7 +54,7 @@ function Ticket() {
   }, [queuer]);
 
   return (
-    <div>
+    <div className="container d-flex justify-content-center flex-column h-100">
       <div className="card shadow">
         {queuer.status !== "idle" && establishment !== null ? (
           <div className="card-header text-center text-light bg-primary">
