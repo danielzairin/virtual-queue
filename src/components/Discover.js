@@ -16,7 +16,8 @@ function Discover() {
       () => {
         setPermissionGranted(false);
         setLoading(false);
-      }
+      },
+      { enableHighAccuracy: true }
     );
   }, []);
 
