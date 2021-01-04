@@ -46,8 +46,12 @@ function Manage() {
   }
 
   async function signOut() {
-    if (establishment.queuers.length === 0) return await auth.signOut();
-    else if (
+    if (establishment.queuers.length === 0) {
+      await db.collection("establishments").doc(establishment.id).update({
+        isOpen: false,
+      });
+      await auth.signOut();
+    } else if (
       window.confirm(
         "Remaining queuers will be denied entry and the queue will be closed. Do you really want to sign-out?"
       )
