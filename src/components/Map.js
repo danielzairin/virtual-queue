@@ -48,7 +48,7 @@ function Map(props) {
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
       >
-        <Marker latitude={5.3405141} longitude={100.3078501}>
+        <Marker latitude={props.latitude} longitude={props.longitude}>
           <p>❌ You are here</p>
         </Marker>
 
