@@ -1,49 +1,17 @@
-import { useContext, useEffect, useState } from "react";
-import DiscoverCard from "./DiscoverCard";
-import { db } from "../firebase";
-import { QueuerContext } from "../contexts/QueuerContext";
+import { useEffect, useState } from "react";
+import Map from "./Map";
 
 function Discover() {
-  const [establishments, setEstablishments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [coordinates, setCoordinates] = useState(null);
   const [permissionGranted, setPermissionGranted] = useState(false);
-  const queuer = useContext(QueuerContext);
 
   useEffect(() => {
-    setLoading(true);
-
-    // Get current location
     navigator.geolocation.getCurrentPosition(
-      (loc) => {
+      (position) => {
+        setCoordinates(position.coords);
         setPermissionGranted(true);
-
-        const { latitude, longitude } = loc.coords;
-
-        // Get establishments from database that are open
-        db.collection("establishments")
-          .where("isOpen", "==", true)
-          .get()
-          .then((docs) => {
-            let establishments = [];
-
-            docs.forEach((doc) => {
-              establishments.push({ id: doc.id, ...doc.data() });
-            });
-
-            // Filter based on current location
-            establishments = establishments.filter((establishment) => {
-              return (
-                latitude >= establishment.latitude - 0.003 &&
-                latitude <= establishment.latitude + 0.003 &&
-                longitude >= establishment.longitude - 0.003 &&
-                longitude <= establishment.longitude + 0.003
-              );
-            });
-
-            // setEstablishments
-            setEstablishments(establishments);
-            setLoading(false);
-          });
+        setLoading(false);
       },
       () => {
         setPermissionGranted(false);
@@ -53,36 +21,22 @@ function Discover() {
   }, []);
 
   return (
-    <div>
-      <h2 className="text-center mb-3">Queues Nearby</h2>
-      {queuer.status === "queueing" ? (
-        <p className="text-center font-italic">
-          You can only queue for one establishment at a time.
-        </p>
-      ) : null}
-      <hr />
-
-      {establishments.length > 0 && !loading ? (
-        <ol className="list-group">
-          {establishments.map((establishment) => (
-            <li key={establishment.id} className="list-group-item shadow mb-3">
-              <DiscoverCard
-                name={establishment.name}
-                id={establishment.id}
-                queueLength={establishment.queuers.length}
-              />
-            </li>
-          ))}
-        </ol>
-      ) : loading ? (
-        <div className="d-flex justify-content-center">
+    <div className="w-100 h-100">
+      {loading ? (
+        <div className="d-flex align-items-center justify-content-center flex-column h-100">
           <div className="spinner-border m-3"></div>
+          <p className="font-italic">Getting current location</p>
         </div>
-      ) : permissionGranted && establishments.length === 0 && !loading ? (
-        <p className="text-center">There are no queues near you.</p>
-      ) : !permissionGranted && !loading ? (
-        <p className="text-center">Please enable location services.</p>
-      ) : null}
+      ) : permissionGranted ? (
+        <Map
+          latitude={coordinates.latitude}
+          longitude={coordinates.longitude}
+        />
+      ) : (
+        <div className="container d-flex justify-content-center flex-column h-100 text-center">
+          <p className="font-italic">Please enable location services</p>
+        </div>
+      )}
     </div>
   );
 }

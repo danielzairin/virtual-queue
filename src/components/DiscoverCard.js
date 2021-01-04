@@ -9,7 +9,7 @@ function DiscoverCard(props) {
 
   function enqueue() {
     // 1. Proceed if queuer is not queueing
-    if (queuer.status !== "queueing") {
+    if (queuer.status !== "queueing" && !props.outOfRange) {
       // 2. Add queuer to establishment's queue
       db.collection("establishments")
         .doc(props.id)
@@ -37,7 +37,7 @@ function DiscoverCard(props) {
 
   return (
     <div>
-      <h2 className="text-capitalize">{props.name}</h2>
+      <h5 className="text-capitalize">{props.name}</h5>
       {props.queueLength > 0 ? (
         <p>
           {props.queueLength} {props.queueLength === 1 ? "person" : "people"} in
@@ -46,8 +46,15 @@ function DiscoverCard(props) {
       ) : (
         <p>Nobody in queue</p>
       )}
+
+      {props.outOfRange ? (
+        <p className="text-danger">Out of range</p>
+      ) : queuer.status === "queueing" ? (
+        <p className="text-danger">Already in a queue</p>
+      ) : null}
+
       <button
-        disabled={queuer.status === "queueing"}
+        disabled={queuer.status === "queueing" || props.outOfRange}
         onClick={enqueue}
         className="btn btn-primary btn-block"
       >
