@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { db } from "../firebase";
 import DiscoverCard from "./DiscoverCard";
+import { useSnackbar } from "notistack";
 
 function Map(props) {
   const [viewport, setViewport] = useState({
@@ -13,6 +14,7 @@ function Map(props) {
   });
   const [establishments, setEstablishments] = useState([]);
   const [selectedEstablishment, setSelectedEstablishment] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     // Get establishments from database that are open
@@ -35,10 +37,22 @@ function Map(props) {
           });
         });
 
+        if (
+          establishments.filter((establishment) => !establishment.outOfRange)
+            .length === 0
+        )
+          enqueueSnackbar("There are no establishments near you.", {
+            variant: "warning",
+            anchorOrigin: {
+              horizontal: "center",
+              vertical: "top",
+            },
+          });
+
         // setEstablishments
         setEstablishments(establishments);
       });
-  }, [props]);
+  }, [props, enqueueSnackbar]);
 
   return (
     <div className="h-100 w-100">
